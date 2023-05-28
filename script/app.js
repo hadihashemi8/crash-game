@@ -189,8 +189,6 @@ stopBtn.addEventListener('click', () => {
     }
     stopBtn.setAttribute('disabled', 'true')
     userInput.removeAttribute('readonly', null)
-    minValueBtn.removeAttribute('disabled', 'true')
-    maxValueBtn.removeAttribute('disabled', 'true')
     userRatio.innerHTML = ratioNum.toFixed(2)
     let userPrize = Number(userInput.value)
     userConis += Number(userPrize * ratioNum)
@@ -208,5 +206,5 @@ minValueBtn.addEventListener('click', () => {
 })
 
 maxValueBtn.addEventListener('click', () => {
-    userInput.value = userConis
+    userInput.value = userConis.toFixed(2)
 })
