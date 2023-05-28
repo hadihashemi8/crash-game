@@ -127,7 +127,7 @@ startBtn.addEventListener('click', () => {
 
         // minues user bet from user stock
         userConis -= userBet
-        countText.innerHTML = userConis
+        countText.innerHTML = userConis.toFixed(2)
 
         // at least ratio is 1
         ratioNum = 1
@@ -193,8 +193,8 @@ stopBtn.addEventListener('click', () => {
     maxValueBtn.removeAttribute('disabled', 'true')
     userRatio.innerHTML = ratioNum.toFixed(2)
     let userPrize = Number(userInput.value)
-    userConis += Number((userPrize * ratioNum).toFixed(2))
-    countText.innerHTML = userConis
+    userConis += Number(userPrize * ratioNum)
+    countText.innerHTML = userConis.toFixed(2)
 
 })
 
