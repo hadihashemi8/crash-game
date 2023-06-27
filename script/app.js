@@ -98,12 +98,13 @@ function genratorrandomNum() {
 // game start btn
 startBtn.addEventListener('click', () => {
 
-    let userBet = Number(userInput.value)
+    let userBet = Number(userInput.value).toFixed(2)
 
 
 
+    console.log(userBet , userConis.toFixed(2));
     // error msg 
-    if (userBet > userConis) {
+    if (userBet > userConis.toFixed(2)) {
         errorText.innerHTML = 'your stock not enough'
         setTimeout(() => {
             errorText.innerHTML = ""
@@ -126,13 +127,15 @@ startBtn.addEventListener('click', () => {
         userRatio.innerHTML = ''
 
         // minues user bet from user stock
-        userConis -= userBet
-        countText.innerHTML = userConis.toFixed(2)
+        userConis =  userConis - userBet
+        console.log(userConis.toFixed(2));
+        userConis < 0 ? countText.innerHTML = '0.00' : countText.innerHTML = userConis.toFixed(2)
+    
 
         // at least ratio is 1
         ratioNum = 1
         randomNum = genratorrandomNum()
-
+console.log(randomNum);
 
 
 
@@ -190,8 +193,8 @@ stopBtn.addEventListener('click', () => {
     stopBtn.setAttribute('disabled', 'true')
     userInput.removeAttribute('readonly', null)
     userRatio.innerHTML = ratioNum.toFixed(2)
-    let userPrize = Number(userInput.value)
-    userConis += Number(userPrize * ratioNum)
+    let userBet = Number(userInput.value)
+    userConis += userBet * ratioNum
     countText.innerHTML = userConis.toFixed(2)
 
 })
