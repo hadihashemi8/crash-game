@@ -11,20 +11,35 @@
 
 <body>
 
+    <audio id="coin-sound">
+        <source src="./coin.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="lose-sound">
+        <source src="./Red-Cross.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gameOver-sound">
+        <source src="./Game-Over.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="error-sound">
+        <source src="./error.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="user-count">
         <h1 class="count-text"></h1>
-    
+
         <div class="d1"></div>
         <div class="d2"></div>
         <div class="d3"></div>
         <div class="d4"></div>
     </div>
 
+
     <div class="container">
 
         <div class="game-screen">
             <div class="screen">
                 <h1 class="ratio">1.00</h1>
+                <p class="erroe-text"></p>
                 <h4 class="user-ratio"></h4>
             </div>
         </div>
@@ -40,12 +55,17 @@
                     <button class="opt-item">500</button>
                     <button class="opt-item">1000</button>
                 </div>
-                <p class="erroe-text"></p>
+                <div class="autoCashout-section">
+                    <input class="autoCashOut-input" type="text" disabled>
+                    <button class="active-autoCashOut">Auto Cashout</button>
+                </div>
                 <div class="user-control">
                     <div style="display: flex; align-items: center; padding: 0 5px;">
-                        <button class="min-value-btn" style="padding: 5px; border: 1px solid #f1f1f1; color: #f1f1f1; outline: none; cursor: pointer; background-color: transparent; ">MIN</button>
+                        <button class="min-value-btn"
+                            style="padding: 5px; border: 1px solid #f1f1f1; color: #f1f1f1; outline: none; cursor: pointer; background-color: transparent; ">MIN</button>
                         <input class="user-input" type="text" placeholder="insert your Bet">
-                        <button class="max-value-btn" style="padding: 5px; border: 1px solid #f1f1f1; color: #f1f1f1; outline: none; cursor: pointer; background-color: transparent; ">MAX</button>
+                        <button class="max-value-btn"
+                            style="padding: 5px; border: 1px solid #f1f1f1; color: #f1f1f1; outline: none; cursor: pointer; background-color: transparent; ">MAX</button>
                     </div>
                     <div class="btn-section">
                         <button class="start-game">START</button>

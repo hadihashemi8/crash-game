@@ -9,8 +9,12 @@ let userInput = $.querySelector('.user-input')
 let errorText = $.querySelector('.erroe-text')
 const options = $.querySelectorAll('.opt-item')
 let userRatio = $.querySelector('.user-ratio')
-
-
+const activeAutoCashOut = $.querySelector('.active-autoCashOut')
+const autoCashOutInput = $.querySelector('.autoCashOut-input')
+const coinSound = $.querySelector('#coin-sound')
+const loseSound = $.querySelector('#lose-sound')
+const gameOverSound = $.querySelector('#gameOver-sound')
+const errorSound = $.querySelector('#error-sound')
 
 
 let userConis = 5000
@@ -22,6 +26,8 @@ let ratioNum
 let randomNum;
 // interval ratio
 let startRatio;
+// user Ratio
+let autoRatio;
 
 
 // user options to type fast 
@@ -36,9 +42,9 @@ options.forEach(item => {
 
 // game algoritms
 let algoritms = [
-    { condition: 'randomNum < 1.02 || randomNum > 1.10', count: 5 },
-    { condition: 'randomNum < 1.10 || randomNum > 2', count: 4 },
-    { condition: 'randomNum < 2 || randomNum > 4', count: 3 },
+    { condition: 'randomNum < 1.02 || randomNum > 1.10', count: 6 },
+    { condition: 'randomNum < 1.10 || randomNum > 2', count: 6 },
+    { condition: 'randomNum < 2 || randomNum > 4', count: 5 },
     { condition: 'randomNum < 4 || randomNum > 10', count: 2 },
     { condition: 'randomNum < 10 || randomNum > 50', count: 1 },
 ]
@@ -98,19 +104,23 @@ function genratorrandomNum() {
 // game start btn
 startBtn.addEventListener('click', () => {
 
-    let userBet = Number(userInput.value).toFixed(2)
+    let userBet = Number(userInput.value)
+    autoRatio = autoCashOutInput.value
 
 
 
-    console.log(userBet , userConis.toFixed(2));
+console.log(userBet , Number(userConis.toFixed(2)));
+    
     // error msg 
-    if (userBet > userConis.toFixed(2)) {
+    if (userBet > Number(userConis.toFixed(2))) {
+        errorSound.play()
         errorText.innerHTML = 'your stock not enough'
         setTimeout(() => {
             errorText.innerHTML = ""
         }, 2000);
 
     } else if (userBet == '' || userBet < 10) {
+        errorSound.play()
         errorText.innerHTML = 'At least value 10 coin'
         setTimeout(() => {
             errorText.innerHTML = ""
@@ -124,18 +134,19 @@ startBtn.addEventListener('click', () => {
         stopBtn.removeAttribute('disabled', 'true')
         minValueBtn.setAttribute('disabled', 'true')
         maxValueBtn.setAttribute('disabled', 'true')
+        autoCashOutInput.setAttribute('readonly', null)
+        autoCashOutInput.style.opacity = 0.2
         userRatio.innerHTML = ''
 
         // minues user bet from user stock
-        userConis =  userConis - userBet
-        console.log(userConis.toFixed(2));
+        userConis = userConis - userBet
         userConis < 0 ? countText.innerHTML = '0.00' : countText.innerHTML = userConis.toFixed(2)
-    
+
 
         // at least ratio is 1
         ratioNum = 1
         randomNum = genratorrandomNum()
-console.log(randomNum);
+        console.log(randomNum);
 
 
 
@@ -155,13 +166,22 @@ console.log(randomNum);
 
 
         } else {
+
             // if random number not equal to 1 we start ratio starter
             startRatio = setInterval(() => {
                 ratioNum += 0.01
                 ratioElem.innerHTML = ratioNum.toFixed(2)
 
                 // and here if random number equal to ratio game over and update some style
-                if (ratioNum.toFixed(2) == randomNum) {
+                if (ratioNum.toFixed(2) == Number(autoRatio).toFixed(2)) {
+                    userRatio.innerHTML = Number(autoRatio).toFixed(2)
+                    userConis += userBet * ratioNum
+                    countText.innerHTML = userConis.toFixed(2)
+                    stopBtn.setAttribute('disabled', 'true')
+                    coinSound.play()
+
+                }
+                else if (ratioNum.toFixed(2) == randomNum) {
                     clearInterval(startRatio)
                     ratioElem.style.color = 'red'
                     startBtn.removeAttribute('disabled', 'true')
@@ -169,8 +189,15 @@ console.log(randomNum);
                     stopBtn.setAttribute('disabled', 'true')
                     minValueBtn.removeAttribute('disabled', 'true')
                     maxValueBtn.removeAttribute('disabled', 'true')
+                    autoCashOutInput.removeAttribute('readonly', null)
+                    autoCashOutInput.style.opacity = 1
+                   
+                    if (userConis == 0) {
+                        gameOverSound.play()
+                    }else{
+                        loseSound.play()
 
-
+                    }
                 }
 
             }, 40);
@@ -190,13 +217,14 @@ stopBtn.addEventListener('click', () => {
     if (ratioNum == randomNum) {
         startBtn.removeAttribute('disabled', 'true')
     }
+    coinSound.play()
     stopBtn.setAttribute('disabled', 'true')
-    userInput.removeAttribute('readonly', null)
     userRatio.innerHTML = ratioNum.toFixed(2)
     let userBet = Number(userInput.value)
     userConis += userBet * ratioNum
     countText.innerHTML = userConis.toFixed(2)
-
+    autoCashOutInput.removeAttribute('readonly', null)
+    autoCashOutInput.style.opacity = 1
 })
 
 
@@ -211,3 +239,19 @@ minValueBtn.addEventListener('click', () => {
 maxValueBtn.addEventListener('click', () => {
     userInput.value = userConis.toFixed(2)
 })
+
+
+
+// auto cashout section
+
+
+
+
+activeAutoCashOut.addEventListener('click', () => {
+    autoCashOutInput.removeAttribute('disabled')
+})
+
+
+
+
+

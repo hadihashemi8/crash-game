@@ -149,6 +149,8 @@ body {
     font-size: 14px;
     color: red;
     letter-spacing: 2px;
+    margin-top: 20px;
+
 }
 
 
@@ -191,6 +193,33 @@ body {
 .stop-game {
     background-color: orange;
 }
+
+
+/* auto cashout section */
+
+.autoCashout-section{
+    display: flex;
+    padding: 5px 15px ;
+    width: 100%;
+
+}
+.autoCashout-section > input{
+    flex: 2;
+    padding: 5px;
+    outline: none;
+    border: none;
+}
+.autoCashout-section > button{
+    flex: 1;
+    padding: 8px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: lime;
+}
+
+
+
 
 
 @keyframes l-to-r {
