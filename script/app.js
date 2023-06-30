@@ -17,8 +17,27 @@ const gameOverSound = $.querySelector('#gameOver-sound')
 const errorSound = $.querySelector('#error-sound')
 
 
-let userConis = 5000
-countText.innerHTML = userConis
+let userConis; 
+
+
+// check localstorage coins
+
+window.addEventListener('load', () => {
+    const coins = localStorage.getItem("coins")
+    
+    
+    
+    if (coins) {
+        userConis = coins
+    } else {
+        userConis = 5000
+        
+    }
+    
+    countText.innerHTML = userConis
+})
+
+
 
 // ratio starter num
 let ratioNum
@@ -109,10 +128,10 @@ startBtn.addEventListener('click', () => {
 
 
 
-console.log(userBet , Number(userConis.toFixed(2)));
-    
+    console.log(userBet, Number(userConis).toFixed(2));
+
     // error msg 
-    if (userBet > Number(userConis.toFixed(2))) {
+    if (userBet > Number(userConis).toFixed(2)) {
         errorSound.play()
         errorText.innerHTML = 'your stock not enough'
         setTimeout(() => {
@@ -141,6 +160,8 @@ console.log(userBet , Number(userConis.toFixed(2)));
         // minues user bet from user stock
         userConis = userConis - userBet
         userConis < 0 ? countText.innerHTML = '0.00' : countText.innerHTML = userConis.toFixed(2)
+
+        localStorage.setItem("coins", userConis.toFixed(2))
 
 
         // at least ratio is 1
@@ -179,6 +200,7 @@ console.log(userBet , Number(userConis.toFixed(2)));
                     countText.innerHTML = userConis.toFixed(2)
                     stopBtn.setAttribute('disabled', 'true')
                     coinSound.play()
+                    localStorage.setItem("coins", userConis.toFixed(2))
 
                 }
                 else if (ratioNum.toFixed(2) == randomNum) {
@@ -191,10 +213,10 @@ console.log(userBet , Number(userConis.toFixed(2)));
                     maxValueBtn.removeAttribute('disabled', 'true')
                     autoCashOutInput.removeAttribute('readonly', null)
                     autoCashOutInput.style.opacity = 1
-                   
+
                     if (userConis == 0) {
                         gameOverSound.play()
-                    }else{
+                    } else {
                         loseSound.play()
 
                     }
@@ -223,6 +245,7 @@ stopBtn.addEventListener('click', () => {
     let userBet = Number(userInput.value)
     userConis += userBet * ratioNum
     countText.innerHTML = userConis.toFixed(2)
+    localStorage.setItem("coins", userConis.toFixed(2))
     autoCashOutInput.removeAttribute('readonly', null)
     autoCashOutInput.style.opacity = 1
 })
@@ -237,7 +260,7 @@ minValueBtn.addEventListener('click', () => {
 })
 
 maxValueBtn.addEventListener('click', () => {
-    userInput.value = userConis.toFixed(2)
+    userInput.value = Number(userConis).toFixed(2)
 })
 
 
@@ -253,5 +276,35 @@ activeAutoCashOut.addEventListener('click', () => {
 
 
 
+let x = new Date().toLocaleTimeString()
+
+console.log(x);
+
+let countDownDate = new Date(`August ${5}, 2023 18:52:00`).getTime();
 
 
+
+// Update the count down every 1 second
+let timer = setInterval(function() {
+
+  // Get today's date and time
+  let now = new Date().getTime();
+  
+  // Find the distance between now and the count down date
+  let distance = countDownDate - now;
+  
+  
+  
+  // Time calculations for days, hours, minutes and seconds
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+  if (distance < 0) {
+    clearInterval(x);
+ console.log('ok');
+  }
+
+} , 1000)

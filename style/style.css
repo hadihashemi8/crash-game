@@ -21,6 +21,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .count-text {
@@ -77,6 +78,7 @@ body {
     justify-content: space-between;
     border-radius: 25px;
     overflow: hidden;
+    
 }
 
 .game-screen {
